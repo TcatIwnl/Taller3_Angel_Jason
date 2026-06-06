@@ -133,17 +133,19 @@ public class App {
                 int opcion = Integer.parseInt(teclado.nextLine());
 
                 switch (opcion) {
-                    case 1: System.out.println("[Acción: Agregar Mago]"); break;
-                    case 2: System.out.println("[Acción: Modificar Mago]"); break;
-                    case 3: System.out.println("[Acción: Eliminar Mago]"); break;
-                    case 4: System.out.println("[Acción: Agregar Hechizo]"); break;
-                    case 5: System.out.println("[Acción: Modificar Hechizo]"); break;
-                    case 6: System.out.println("[Acción: Eliminar Hechizo]"); break;
+                    case 1: 
+                        agregarMagoInteractivo(teclado, sistema);
+                        break;
+                    case 2: System.out.println("[Acción: Modificar Mago] - Próximamente..."); break;
+                    case 3: System.out.println("[Acción: Eliminar Mago] - Próximamente..."); break;
+                    case 4: System.out.println("[Acción: Agregar Hechizo] - Próximamente..."); break;
+                    case 5: System.out.println("[Acción: Modificar Hechizo] - Próximamente..."); break;
+                    case 6: System.out.println("[Acción: Eliminar Hechizo] - Próximamente..."); break;
                     case 7: subMenu = false; break;
                     default: System.out.println("Opción no válida.");
                 }
             } catch (Exception e) {
-                System.out.println("Error en el panel de administrador: " + e.getMessage());
+                System.out.println("Error en el panel de administrador: Entrada no válida.");
             }
         }
     }
@@ -228,5 +230,24 @@ public class App {
                 System.out.println("Error en el panel de analista: " + e.getMessage());
             }
         }
+    }
+    
+    /**
+     * Solicita los datos al usuario para crear un nuevo mago y lo añade al sistema.
+     */
+    private static void agregarMagoInteractivo(Scanner teclado, SistemaImpl sistema) {
+        System.out.println("\n--- AGREGAR NUEVO MAGO ---");
+        System.out.print("Ingrese el nombre del mago: ");
+        String nombre = teclado.nextLine().trim();
+
+        // Pequeña validación para evitar magos sin nombre
+        if (nombre.isEmpty()) {
+            System.out.println("Error: El nombre no puede estar vacío. Operación cancelada.");
+            return;
+        }
+
+        Mago nuevoMago = new Mago(nombre);
+        sistema.agregarMagoGeneral(nuevoMago);
+        System.out.println("-> ¡Mago '" + nombre + "' agregado exitosamente al sistema!");
     }
 }
