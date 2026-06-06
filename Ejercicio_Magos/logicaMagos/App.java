@@ -167,14 +167,51 @@ public class App {
                 int opcion = Integer.parseInt(teclado.nextLine());
 
                 switch (opcion) {
-                    case 1: System.out.println("[Reporte: Top 10 Mejores Hechizos]"); break;
-                    case 2: System.out.println("[Reporte: Top 3 Mejores Magos]"); break;
-                    case 3: System.out.println("[Reporte: Mostrar todos los Hechizos]"); break;
-                    case 4: System.out.println("[Reporte: Mostrar todos los Magos]"); break;
-                    case 5: System.out.println("[Reporte: Hechizos con puntuación]"); break;
-                    case 6: System.out.println("[Reporte: Magos con puntuación]"); break;
-                    case 7: subMenu = false; break;
-                    default: System.out.println("Opción no válida.");
+                    case 1: 
+                        System.out.println("[Reporte: Top 10 Mejores Hechizos] - Próximamente..."); 
+                        break;
+                    case 2: 
+                        System.out.println("[Reporte: Top 3 Mejores Magos] - Próximamente..."); 
+                        break;
+                    case 3: 
+                    	System.out.println("\n--- LISTA DE TODOS LOS HECHIZOS ---");
+                        for (Hechizo h : sistema.getListaHechizosGenerales()) {
+                            String tipo = "";
+                            if (h instanceof Fuego) {
+                                tipo = "Fuego";
+                            } else if (h instanceof Agua) {
+                                tipo = "Agua";
+                            } else if (h instanceof Tierra) {
+                                tipo = "Tierra";
+                            } else if (h instanceof Planta) {
+                                tipo = "Planta";
+                            }
+                            System.out.println("- " + h.getNombreHechizo() + " (Tipo: " + tipo + ")");
+                        }
+                        break;
+                    case 4: 
+                        System.out.println("\n--- LISTA DE TODOS LOS MAGOS ---");
+                        for (Mago m : sistema.getListaMagosGenerales()) {
+                            System.out.println("- " + m.getNombreMago());
+                        }
+                        break;
+                    case 5: 
+                        System.out.println("\n--- HECHIZOS Y SU PUNTUACIÓN ---");
+                        for (Hechizo h : sistema.getListaHechizosGenerales()) {
+                            System.out.println("- " + h.getNombreHechizo() + " | Puntaje: " + h.calcularPuntaje());
+                        }
+                        break;
+                    case 6: 
+                        System.out.println("\n--- MAGOS Y SU PUNTUACIÓN ---");
+                        for (Mago m : sistema.getListaMagosGenerales()) {
+                            System.out.println("- " + m.getNombreMago() + " | Puntaje Total: " + m.calcularPuntaje());
+                        }
+                        break;
+                    case 7: 
+                        subMenu = false; 
+                        break;
+                    default: 
+                        System.out.println("Opción no válida.");
                 }
             } catch (Exception e) {
                 System.out.println("Error en el panel de analista: " + e.getMessage());
