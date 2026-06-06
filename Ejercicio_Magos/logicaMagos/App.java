@@ -138,7 +138,9 @@ public class App {
                         break;
                     case 2: System.out.println("[Acción: Modificar Mago] - Próximamente..."); break;
                     case 3: System.out.println("[Acción: Eliminar Mago] - Próximamente..."); break;
-                    case 4: System.out.println("[Acción: Agregar Hechizo] - Próximamente..."); break;
+                    case 4: 
+                        agregarHechizoInteractivo(teclado, sistema); //
+                        break;
                     case 5: System.out.println("[Acción: Modificar Hechizo] - Próximamente..."); break;
                     case 6: System.out.println("[Acción: Eliminar Hechizo] - Próximamente..."); break;
                     case 7: subMenu = false; break;
@@ -249,5 +251,68 @@ public class App {
         Mago nuevoMago = new Mago(nombre);
         sistema.agregarMagoGeneral(nuevoMago);
         System.out.println("-> ¡Mago '" + nombre + "' agregado exitosamente al sistema!");
+    }
+    
+    /**
+     * Solicita los datos al usuario para crear un nuevo hechizo según su elemento y lo añade al sistema.
+     * Implementa validación de tipos de datos para evitar caídas del sistema.
+     */
+    private static void agregarHechizoInteractivo(Scanner teclado, SistemaImpl sistema) {
+        System.out.println("\n--- AGREGAR NUEVO HECHIZO ---");
+        System.out.print("Ingrese el nombre del hechizo: ");
+        String nombre = teclado.nextLine().trim();
+
+        if (nombre.isEmpty()) {
+            System.out.println("Error: El nombre del hechizo no puede estar vacío. Operación cancelada.");
+            return;
+        }
+
+        try {
+            System.out.print("Ingrese el daño base del hechizo (número entero): ");
+            int danio = Integer.parseInt(teclado.nextLine());
+
+            System.out.println("\nSeleccione el elemento del hechizo:");
+            System.out.println("1. Fuego");
+            System.out.println("2. Tierra");
+            System.out.println("3. Planta");
+            System.out.println("4. Agua");
+            System.out.print("Opción: ");
+            int tipo = Integer.parseInt(teclado.nextLine());
+
+            switch (tipo) {
+                case 1:
+                    System.out.print("Ingrese la duración de la quemadura (turnos): ");
+                    int duracionQuemadura = Integer.parseInt(teclado.nextLine());
+                    sistema.agregarHechizoGeneral(new Fuego(nombre, danio, duracionQuemadura));
+                    System.out.println("-> ¡Hechizo de Fuego '" + nombre + "' agregado exitosamente!");
+                    break;
+                case 2:
+                    System.out.print("Ingrese la mejora de defensa: ");
+                    int mejoraDefensa = Integer.parseInt(teclado.nextLine());
+                    sistema.agregarHechizoGeneral(new Tierra(nombre, danio, mejoraDefensa));
+                    System.out.println("-> ¡Hechizo de Tierra '" + nombre + "' agregado exitosamente!");
+                    break;
+                case 3:
+                    System.out.print("Ingrese la duración del aturdimiento (stun en turnos): ");
+                    int duracionStun = Integer.parseInt(teclado.nextLine());
+                    System.out.print("Ingrese la cantidad de plantas generadas (decimal, ej. 1.5): ");
+                    double cantPlantas = Double.parseDouble(teclado.nextLine());
+                    sistema.agregarHechizoGeneral(new Planta(nombre, danio, duracionStun, cantPlantas));
+                    System.out.println("-> ¡Hechizo de Planta '" + nombre + "' agregado exitosamente!");
+                    break;
+                case 4:
+                    System.out.print("Ingrese la cantidad de curación (heal): ");
+                    int cantidadHeal = Integer.parseInt(teclado.nextLine());
+                    System.out.print("Ingrese la presión del agua (decimal, ej. 2.0): ");
+                    double presionAgua = Double.parseDouble(teclado.nextLine());
+                    sistema.agregarHechizoGeneral(new Agua(nombre, danio, cantidadHeal, presionAgua));
+                    System.out.println("-> ¡Hechizo de Agua '" + nombre + "' agregado exitosamente!");
+                    break;
+                default:
+                    System.out.println("Error: Opción de elemento no válida. Operación cancelada.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Error de formato: Debe ingresar valores numéricos válidos. Operación cancelada.");
+        }
     }
 }
