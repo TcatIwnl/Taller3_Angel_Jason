@@ -6,6 +6,7 @@ package logicaMagos;
 
 import java.io.File;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 /**
  * Clase principal que actúa como punto de entrada de la aplicación y gestiona las interacciones con el usuario.
@@ -167,12 +168,22 @@ public class App {
                 int opcion = Integer.parseInt(teclado.nextLine());
 
                 switch (opcion) {
-                    case 1: 
-                        System.out.println("[Reporte: Top 10 Mejores Hechizos] - Próximamente..."); 
-                        break;
-                    case 2: 
-                        System.out.println("[Reporte: Top 3 Mejores Magos] - Próximamente..."); 
-                        break;
+	            	case 1: 
+	                    System.out.println("\n--- TOP 10 MEJORES HECHIZOS ---");
+	                    ArrayList<Hechizo> topHechizos = sistema.obtenerTop10Hechizos();
+	                    for (int i = 0; i < topHechizos.size(); i++) {
+	                        Hechizo h = topHechizos.get(i);
+	                        System.out.println((i + 1) + ". " + h.getNombreHechizo() + " | Puntaje: " + h.calcularPuntaje());
+	                    }
+	                    break;
+	            	case 2: 
+	                    System.out.println("\n--- TOP 3 MEJORES MAGOS ---");
+	                    ArrayList<Mago> topMagos = sistema.obtenerTop3Magos();
+	                    for (int i = 0; i < topMagos.size(); i++) {
+	                        Mago m = topMagos.get(i);
+	                        System.out.println((i + 1) + ". " + m.getNombreMago() + " | Puntaje Total: " + m.calcularPuntaje());
+	                    }
+	                    break;
                     case 3: 
                     	System.out.println("\n--- LISTA DE TODOS LOS HECHIZOS ---");
                         for (Hechizo h : sistema.getListaHechizosGenerales()) {

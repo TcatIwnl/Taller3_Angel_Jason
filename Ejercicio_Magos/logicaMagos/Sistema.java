@@ -30,4 +30,16 @@ public interface Sistema {
      * @return ArrayList de hechizos.
      */
     ArrayList<Hechizo> getListaHechizosGenerales();
+
+    /**
+     * Obtiene una lista con los diez mejores hechizos ordenados de mayor a menor puntaje.
+     * @return ArrayList con el Top 10 de Hechizos.
+     */
+    ArrayList<Hechizo> obtenerTop10Hechizos();
+    
+    /**
+     * Obtiene una lista con los tres mejores magos ordenados de mayor a menor puntaje.
+     * @return ArrayList con el Top 3 de Magos.
+     */
+    ArrayList<Mago> obtenerTop3Magos();
 }
