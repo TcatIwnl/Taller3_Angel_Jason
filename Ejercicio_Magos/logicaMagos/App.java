@@ -1,4 +1,4 @@
-//Angel Eduardo Olivares Flores
+ //Angel Eduardo Olivares Flores
 //22.338.590-7 / ICCI
 //Jason Alexander Tapia Castro
 //22.382.028-K / ICCI
@@ -140,7 +140,7 @@ public class App {
                     	modificarMagoInteractivo(teclado, sistema);
                     	break;
                     case 3: 
-                    	System.out.println("[Acción: Eliminar Mago] - Próximamente...");
+                    	eliminarMagoInteractivo(teclado, sistema);
                     	break;
                     case 4: 
                         agregarHechizoInteractivo(teclado, sistema); //
@@ -149,7 +149,7 @@ public class App {
                     	modificarHechizoInteractivo(teclado, sistema); 
                     	break;
                     case 6: 
-                    	System.out.println("[Acción: Eliminar Hechizo] - Próximamente...");
+                    	eliminarHechizoInteractivo(teclado, sistema);
                     	break;
                     case 7:
                     	subMenu = false;
@@ -338,57 +338,99 @@ public class App {
             
             if (indice >= 0 && indice < lista.size()) {
                 Hechizo hechizoElegido = lista.get(indice);
-                System.out.println("\n>>> Modificando: " + hechizoElegido.getNombreHechizo() + " <<<");
+                boolean editando = true;
                 
-                // 1. Modificar el Daño Base (Común para todos)
-                System.out.print("Ingrese el nuevo daño base (actual: " + hechizoElegido.getDanio() + "): ");
-                int nuevoDanio = Integer.parseInt(teclado.nextLine());
-                hechizoElegido.setDanio(nuevoDanio);
-                
-                // 2. Validar y modificar según el Tipo Específico
-                if (hechizoElegido instanceof Fuego) {
-                    Fuego f = (Fuego) hechizoElegido;
-                    System.out.print("Ingrese la nueva duración de la quemadura (actual: " + f.getDuracionQuemadura() + "): ");
-                    int nuevaDuracion = Integer.parseInt(teclado.nextLine());
-                    f.setDuracionQuemadura(nuevaDuracion);
-                    
-                } else if (hechizoElegido instanceof Tierra) {
-                    Tierra t = (Tierra) hechizoElegido;
-                    System.out.print("Ingrese la nueva mejora de defensa (actual: " + t.getMejoraDefensa() + "): ");
-                    int nuevaDefensa = Integer.parseInt(teclado.nextLine());
-                    t.setMejoraDefensa(nuevaDefensa);
-                    
-                } else if (hechizoElegido instanceof Planta) {
-                    Planta p = (Planta) hechizoElegido;
-                    System.out.print("Ingrese la nueva duración del aturdimiento (actual: " + p.getDuracionStun() + "): ");
-                    int nuevoStun = Integer.parseInt(teclado.nextLine());
-                    p.setDuracionStun(nuevoStun);
-                    
-                    System.out.print("Ingrese la nueva cantidad de plantas (actual: " + (int)p.getCantPlantas() + "): ");
-                    int nuevaCant = Integer.parseInt(teclado.nextLine());
-                    p.setCantPlantas(nuevaCant);
-                    
-                } else if (hechizoElegido instanceof Agua) {
-                    Agua a = (Agua) hechizoElegido;
-                    System.out.print("Ingrese la nueva cantidad de curación/heal (actual: " + a.getCantidadHeal() + "): ");
-                    int nuevoHeal = Integer.parseInt(teclado.nextLine());
-                    a.setCantidadHeal(nuevoHeal);
-                    
-                    System.out.print("Ingrese la nueva presión del agua (actual: " + (int)a.getPresionAgua() + "): ");
-                    int nuevaPresion = Integer.parseInt(teclado.nextLine());
-                    a.setPresionAgua(nuevaPresion);
+                // Sub-menú para el Hechizo elegido
+                while (editando) {
+                    try {
+                        System.out.println("\n>>> Editando el Hechizo: " + hechizoElegido.getNombreHechizo() + " <<<");
+                        System.out.println("1. Cambiar nombre del hechizo");
+                        System.out.println("2. Cambiar daño base (Actual: " + hechizoElegido.getDanio() + ")");
+                        System.out.println("3. Cambiar atributos elementales de " + hechizoElegido.getTipo());
+                        System.out.println("4. Volver al menú anterior");
+                        System.out.print("Seleccione una opción: ");
+                        
+                        int opcion = Integer.parseInt(teclado.nextLine());
+                        
+                        switch (opcion) {
+                            case 1:
+                                // MODIFICAR NOMBRE
+                                System.out.print("Ingrese el nuevo nombre para " + hechizoElegido.getNombreHechizo() + ": ");
+                                String nuevoNombre = teclado.nextLine().trim();
+                                if (!nuevoNombre.isEmpty()) {
+                                    hechizoElegido.setNombreHechizo(nuevoNombre);
+                                    System.out.println("¡Nombre actualizado con éxito!");
+                                    sistema.guardarDatos(); // Guardar cambios
+                                } else {
+                                    System.out.println("Error: El nombre no puede estar vacío.");
+                                }
+                                break;
+                                
+                            case 2:
+                                // MODIFICAR DAÑO BASE
+                                System.out.print("Ingrese el nuevo daño base (actual: " + hechizoElegido.getDanio() + "): ");
+                                int nuevoDanio = Integer.parseInt(teclado.nextLine());
+                                hechizoElegido.setDanio(nuevoDanio);
+                                System.out.println("¡Daño base actualizado con éxito!");
+                                sistema.guardarDatos(); // Guardar cambios
+                                break;
+                                
+                            case 3:
+                                // MODIFICAR ATRIBUTOS ESPECÍFICOS SEGÚN TIPO
+                                if (hechizoElegido instanceof Fuego) {
+                                    Fuego f = (Fuego) hechizoElegido;
+                                    System.out.print("Ingrese nueva duración de quemadura (actual: " + f.getDuracionQuemadura() + "): ");
+                                    int nuevaDuracion = Integer.parseInt(teclado.nextLine());
+                                    f.setDuracionQuemadura(nuevaDuracion);
+                                    
+                                } else if (hechizoElegido instanceof Tierra) {
+                                    Tierra t = (Tierra) hechizoElegido;
+                                    System.out.print("Ingrese nueva mejora de defensa (actual: " + t.getMejoraDefensa() + "): ");
+                                    int nuevaDefensa = Integer.parseInt(teclado.nextLine());
+                                    t.setMejoraDefensa(nuevaDefensa);
+                                    
+                                } else if (hechizoElegido instanceof Planta) {
+                                    Planta p = (Planta) hechizoElegido;
+                                    System.out.print("Ingrese nueva duración de aturdimiento (actual: " + p.getDuracionStun() + "): ");
+                                    int nuevoStun = Integer.parseInt(teclado.nextLine());
+                                    p.setDuracionStun(nuevoStun);
+                                    
+                                    System.out.print("Ingrese nueva cantidad de plantas (actual: " + (int)p.getCantPlantas() + "): ");
+                                    int nuevaCant = Integer.parseInt(teclado.nextLine());
+                                    p.setCantPlantas(nuevaCant);
+                                    
+                                } else if (hechizoElegido instanceof Agua) {
+                                    Agua a = (Agua) hechizoElegido;
+                                    System.out.print("Ingrese nueva cantidad de curación/heal (actual: " + a.getCantidadHeal() + "): ");
+                                    int nuevoHeal = Integer.parseInt(teclado.nextLine());
+                                    a.setCantidadHeal(nuevoHeal);
+                                    
+                                    System.out.print("Ingrese nueva presión del agua (actual: " + (int)a.getPresionAgua() + "): ");
+                                    int nuevaPresion = Integer.parseInt(teclado.nextLine());
+                                    a.setPresionAgua(nuevaPresion);
+                                }
+                                System.out.println("¡Atributos elementales actualizados con éxito!");
+                                sistema.guardarDatos(); // Guardar cambios
+                                break;
+                                
+                            case 4:
+                                // SALIR DEL BUCLE
+                                editando = false;
+                                break;
+                                
+                            default:
+                                System.out.println("Opción no válida. Intente nuevamente.");
+                        }
+                        
+                    } catch (NumberFormatException e) {
+                        System.out.println("Error de entrada: Debe ingresar un valor numérico válido. Intente de nuevo.");
+                    }
                 }
-                
-                System.out.println("\n¡Hechizo modificado con éxito!");
-                
-                // Guardar los cambios en los archivos .txt inmediatamente
-                sistema.guardarDatos();
-                
             } else {
-                System.out.println("Error: El número seleccionado está fuera de rango.");
+                System.out.println("Error: Mago no encontrado o número fuera de rango.");
             }
         } catch (NumberFormatException e) {
-            System.out.println("Error de formato: Debe ingresar solo números válidos. Operación cancelada.");
+            System.out.println("Error de formato al seleccionar hechizo: Debe ingresar un número.");
         } catch (Exception e) {
             System.out.println("Ocurrió un error inesperado: " + e.getMessage());
         }
@@ -408,35 +450,189 @@ public class App {
             
             if (indexMago >= 0 && indexMago < magos.size()) {
                 Mago magoElegido = magos.get(indexMago);
-                System.out.println("Mago elegido: " + magoElegido.getNombreMago());
+                boolean editando = true;
                 
-                // Mostramos los hechizos globales para que elija cuál enseñarle
-                System.out.println("\nHechizos disponibles en el mundo:");
-                ArrayList<Hechizo> hechizosMundo = sistema.getListaHechizosGenerales();
-                for (int j = 0; j < hechizosMundo.size(); j++) {
-                    System.out.println((j + 1) + ". " + hechizosMundo.get(j).getNombreHechizo());
-                }
-                
-                System.out.print("Seleccione el número del hechizo que desea enseñarle: ");
-                int indexHechizo = Integer.parseInt(teclado.nextLine()) - 1;
-                
-                if (!magoElegido.getListaHechizos().contains(hechizosMundo.get(indexHechizo))&&indexHechizo >= 0 && indexHechizo < hechizosMundo.size()) {
-                	
-                    Hechizo nuevoHechizo = hechizosMundo.get(indexHechizo);
-                    magoElegido.agregarHechizo(nuevoHechizo);
-                    System.out.println("¡" + magoElegido.getNombreMago() + " ha aprendido " + nuevoHechizo.getNombreHechizo() + "!");
+                // Sub-menú para el Mago elegido
+                while (editando) {
+                    System.out.println("\n>>> Editando al Mago: " + magoElegido.getNombreMago() + " <<<");
+                    System.out.println("1. Cambiar nombre del mago");
+                    System.out.println("2. Enseñar nuevo hechizo (Agregar)");
+                    System.out.println("3. Olvidar hechizo (Eliminar)");
+                    System.out.println("4. Volver al menú anterior");
+                    System.out.print("Seleccione una opción: ");
                     
-                    //Guardar los cambios en el archivo
-                    sistema.guardarDatos();
-                }
-                else {
-                	System.out.println("El mago "+ magoElegido.getNombreMago() + " ya posee " + hechizosMundo.get(indexHechizo).getNombreHechizo());
+                    int opcion = Integer.parseInt(teclado.nextLine());
+                    
+                    switch (opcion) {
+                        case 1:
+                            // MODIFICAR NOMBRE
+                            System.out.print("Ingrese el nuevo nombre para " + magoElegido.getNombreMago() + ": ");
+                            String nuevoNombre = teclado.nextLine().trim();
+                            if (!nuevoNombre.isEmpty()) {
+                                magoElegido.setNombreMago(nuevoNombre);
+                                System.out.println("¡Nombre actualizado con éxito!");
+                                sistema.guardarDatos(); // Guardar cambios
+                            } else {
+                                System.out.println("Error: El nombre no puede estar vacío.");
+                            }
+                            break;
+                            
+                        case 2:
+                            // AGREGAR HECHIZO
+                            System.out.println("\nHechizos disponibles en el mundo:");
+                            ArrayList<Hechizo> hechizosMundo = sistema.getListaHechizosGenerales();
+                            for (int j = 0; j < hechizosMundo.size(); j++) {
+                                System.out.println((j + 1) + ". " + hechizosMundo.get(j).getNombreHechizo());
+                            }
+                            
+                            System.out.print("Seleccione el número del hechizo que desea enseñarle: ");
+                            int indexHechizo = Integer.parseInt(teclado.nextLine()) - 1;
+                            
+                            if (indexHechizo >= 0 && indexHechizo < hechizosMundo.size()) {
+                                Hechizo nuevoHechizo = hechizosMundo.get(indexHechizo);
+                                
+                                // Validamos que el hechizo que eligio no lo tenga
+                                if (!magoElegido.getListaHechizos().contains(nuevoHechizo)) {
+                                    magoElegido.agregarHechizo(nuevoHechizo);
+                                    System.out.println("¡" + magoElegido.getNombreMago() + " ha aprendido " + nuevoHechizo.getNombreHechizo() + "!");
+                                    sistema.guardarDatos(); // Guardar cambios
+                                } else {
+                                    System.out.println("El mago " + magoElegido.getNombreMago() + " ya posee " + nuevoHechizo.getNombreHechizo());
+                                }
+                            } else {
+                                System.out.println("Número de hechizo fuera de rango.");
+                            }
+                            break;
+                            
+                        case 3:
+                            // ELIMINAR HECHIZO
+                            ArrayList<Hechizo> repertorio = magoElegido.getListaHechizos();
+                            if (repertorio.isEmpty()) {
+                                System.out.println("Este mago no conoce ningún hechizo actualmente.");
+                            } else {
+                                System.out.println("\nRepertorio actual de " + magoElegido.getNombreMago() + ":");
+                                for (int j = 0; j < repertorio.size(); j++) {
+                                    System.out.println((j + 1) + ". " + repertorio.get(j).getNombreHechizo());
+                                }
+                                System.out.print("Seleccione el número del hechizo a olvidar: ");
+                                int indexOlvidar = Integer.parseInt(teclado.nextLine()) - 1;
+                                
+                                if (indexOlvidar >= 0 && indexOlvidar < repertorio.size()) {
+                                    //l saca el elemento de la lista y te lo devuelve para poder mostrar su nombre
+                                    Hechizo hechizoRemovido = repertorio.remove(indexOlvidar);
+                                    System.out.println("¡" + magoElegido.getNombreMago() + " ha olvidado " + hechizoRemovido.getNombreHechizo() + "!");
+                                    sistema.guardarDatos(); // Guardar cambios
+                                } else {
+                                    System.out.println("Número de hechizo fuera de rango.");
+                                }
+                            }
+                            break;
+                            
+                        case 4:
+                            // SALIR DEL BUCLE
+                            editando = false;
+                            break;
+                            
+                        default:
+                            System.out.println("Opción no válida.");
+                    }
                 }
             } else {
                 System.out.println("Mago no encontrado.");
             }
+        } catch (NumberFormatException e) {
+            System.out.println("Error de formato: Debe ingresar un valor numérico.");
         } catch (Exception e) {
-            System.out.println("Entrada inválida.");
+            System.out.println("Ocurrió un error inesperado.");
+        }
+    }
+    
+    private static void eliminarMagoInteractivo(Scanner teclado, SistemaImpl sistema) {
+        System.out.println("\n--- ELIMINAR MAGO ---");
+        ArrayList<Mago> magos = sistema.getListaMagosGenerales();
+
+        if (magos.isEmpty()) {
+            System.out.println("No hay magos registrados en el sistema actualmente.");
+            return;
+        }
+
+        for (int i = 0; i < magos.size(); i++) {
+            System.out.println((i + 1) + ". " + magos.get(i).getNombreMago());
+        }
+
+        System.out.print("\nSeleccione el número del mago que desea eliminar (o 0 para cancelar): ");
+        try {
+            int index = Integer.parseInt(teclado.nextLine()) - 1;
+
+            if (index == -1) {
+                System.out.println("Operación cancelada.");
+                return;
+            }
+
+            if (index >= 0 && index < magos.size()) {
+                // remove() elimina el objeto y lo retorna temporalmente para poder usar su nombre en el mensaje
+                Mago magoEliminado = magos.remove(index);
+                System.out.println("¡El mago '" + magoEliminado.getNombreMago() + "' ha sido eliminado del sistema con éxito!");
+                
+                // Guardar cambios en los txt
+                sistema.guardarDatos();
+            } else {
+                System.out.println("Error: El número seleccionado está fuera de rango.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Error de formato: Debe ingresar solo números válidos. Operación cancelada.");
+        } catch (Exception e) {
+            System.out.println("Ocurrió un error inesperado: " + e.getMessage());
+        }
+    }
+    
+    private static void eliminarHechizoInteractivo(Scanner teclado, SistemaImpl sistema) {
+        System.out.println("\n--- ELIMINAR HECHIZO ---");
+        ArrayList<Hechizo> hechizos = sistema.getListaHechizosGenerales();
+
+        if (hechizos.isEmpty()) {
+            System.out.println("No hay hechizos registrados en el catálogo mundial.");
+            return;
+        }
+
+        for (int i = 0; i < hechizos.size(); i++) {
+            System.out.println((i + 1) + ". " + hechizos.get(i).getNombreHechizo() + " (Tipo: " + hechizos.get(i).getTipo() + ")");
+        }
+
+        System.out.print("\nSeleccione el número del hechizo que desea eliminar (o 0 para cancelar): ");
+        try {
+            int index = Integer.parseInt(teclado.nextLine()) - 1;
+
+            if (index == -1) {
+                System.out.println("Operación cancelada.");
+                return;
+            }
+
+            if (index >= 0 && index < hechizos.size()) {
+                // 1. Lo eliminamos del catálogo general
+                Hechizo hechizoEliminado = hechizos.remove(index);
+                
+                // 2. Recorremos todos los magos para que "olviden" el hechizo
+                ArrayList<Mago> magos = sistema.getListaMagosGenerales();
+                for (Mago m : magos) {
+                    // .remove(Objeto) busca si el mago tiene esa referencia y la borra. 
+                    // Si el mago no lo tiene, no hace nada y sigue adelante.
+                    m.getListaHechizos().remove(hechizoEliminado);
+                }
+
+                System.out.println("¡El hechizo '" + hechizoEliminado.getNombreHechizo() + "' ha sido erradicado del mundo!");
+                System.out.println("-> Nota: Todos los magos que conocían este hechizo lo han olvidado.");
+                
+                // 3. Guardamos los cambios. Al sobrescribir Magos.txt, los repertorios ya saldrán limpios.
+                sistema.guardarDatos();
+                
+            } else {
+                System.out.println("Error: El número seleccionado está fuera de rango.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Error de formato: Debe ingresar solo números válidos.");
+        } catch (Exception e) {
+            System.out.println("Ocurrió un error inesperado: " + e.getMessage());
         }
     }
 }

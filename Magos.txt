@@ -14,3 +14,4 @@ Clapt;Pulso de Agua|Giro Fuego|Pedrada
 Rabi;Latigazo|Absorber|Vórtice Ígneo|Avalancha|Rueda Fuego|Tormenta de Arena
 Nilo;Patada Ígnea|Acua Jet|Huesomerang|Clorofila|Fogonazo|Polen Somnífero|Torbellino
 Papulini;Fuego Sagrado|Absorber|Infierno
+Pepe;Hidrobomba
