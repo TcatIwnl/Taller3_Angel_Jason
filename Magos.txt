@@ -1,6 +1,6 @@
 Pruno;Sofoco|Disparo Lodo|Pirotecnia|Vórtice Ígneo
 Ferran;Salmuera|Envite Igneo|Disparo Lodo|Poder Pasado|Rueda Fuego|Hidroariete|Burbuja
-Sasa;Infierno|Martillazo|Hidroariete|Envite Igneo
+Sasa;Infierno|Martillazo|Hidroariete|Envite Igneo|Polen Somnífero
 Mul;Gigadrenado|Rayo Burbuja|Danza Lluvia|Pistola Agua
 Branco;Arraigo|Silvato|Danza Lluvia
 MartinNegro;Acua Aro|Tumba Rocas|Polen Somnífero|Escaldar|Disparo Lodo|Cascada|Pirotecnia

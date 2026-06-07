@@ -5,7 +5,7 @@ package logicaMagos;
  */
 public class Planta extends Hechizo {
     private int duracionStun;
-    private double cantPlantas;
+    private int cantPlantas;
     
     /**
      * Constructor para el hechizo de Planta.
@@ -14,8 +14,8 @@ public class Planta extends Hechizo {
      * @param duracionStun Duración del aturdimiento.
      * @param cantPlantas Cantidad de plantas invocadas.
      */
-    public Planta(String nombreHechizo, int danio, int duracionStun, double cantPlantas) {
-        super(nombreHechizo, danio);
+    public Planta(String nombreHechizo, String tipo, int danio, int duracionStun, int cantPlantas) {
+        super(nombreHechizo, tipo, danio);
         this.duracionStun = duracionStun;
         this.cantPlantas = cantPlantas;
     }
@@ -33,5 +33,5 @@ public class Planta extends Hechizo {
     public int getDuracionStun() { return duracionStun; }
     public void setDuracionStun(int duracionStun) { this.duracionStun = duracionStun; }
     public double getCantPlantas() { return cantPlantas; }
-    public void setCantPlantas(double cantPlantas) { this.cantPlantas = cantPlantas; }
+    public void setCantPlantas(int cantPlantas) { this.cantPlantas = cantPlantas; }
 }

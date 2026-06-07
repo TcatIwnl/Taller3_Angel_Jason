@@ -12,8 +12,8 @@ public class Tierra extends Hechizo {
      * @param danio Daño base.
      * @param mejoraDefensa Puntos de mejora en la defensa.
      */
-    public Tierra(String nombreHechizo, int danio, int mejoraDefensa) {
-        super(nombreHechizo, danio);
+    public Tierra(String nombreHechizo, String tipo, int danio, int mejoraDefensa) {
+        super(nombreHechizo, tipo, danio);
         this.mejoraDefensa = mejoraDefensa;
     }
 

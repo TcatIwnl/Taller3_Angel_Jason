@@ -1,7 +1,7 @@
 package logicaMagos;
 
-import java.util.ArrayList;
-
+import java.util.*;
+import java.io.*;
 /**
  * Clase que implementa la lógica de negocio y administra las colecciones principales del programa.
  */
@@ -100,5 +100,58 @@ public class SistemaImpl implements Sistema {
         }
         
         return top3;
+    }
+    
+    public void guardarDatos() {
+        try {
+            // 1. SOBRESCRIBIR HECHIZOS.TXT
+            BufferedWriter writerHechizos = new BufferedWriter(new FileWriter("Hechizos.txt"));
+            
+            for (Hechizo h : getListaHechizosGenerales()) {
+                // Reconstruimos la primera parte que todos tienen
+                String linea = h.getNombreHechizo() + ";";
+                
+                if (h.getTipo().equalsIgnoreCase("Fuego")) {
+                    Fuego f = (Fuego) h; // Casteo
+                    linea += "Fuego;" + f.getDanio() + ";" + f.getDuracionQuemadura();
+                } else if (h.getTipo().equalsIgnoreCase("Tierra")) {
+                    Tierra t = (Tierra) h;
+                    linea += "Tierra;" + t.getDanio() + ";" + t.getMejoraDefensa();
+                } else if (h.getTipo().equalsIgnoreCase("Planta")) {
+                    Planta p = (Planta) h;
+                    linea += "Planta;" + p.getDanio() + ";" + p.getDuracionStun() + "," + (int)p.getCantPlantas(); 
+                } else if (h.getTipo().equalsIgnoreCase("Agua")) {
+                    Agua a = (Agua) h;
+                    linea += "Agua;" + a.getDanio() + ";" + a.getCantidadHeal() + "," + (int)a.getPresionAgua();
+                }
+                
+                writerHechizos.write(linea);
+                writerHechizos.newLine();
+            }
+            writerHechizos.close();
+
+            // 2. SOBRESCRIBIR MAGOS.TXT
+            BufferedWriter writerMagos = new BufferedWriter(new FileWriter("Magos.txt"));
+            
+            for (Mago m : getListaMagosGenerales()) {
+                String lineaMago = m.getNombreMago() + ";";
+                
+                ArrayList<Hechizo> repertorio = m.getListaHechizos();
+                for (int i = 0; i < repertorio.size(); i++) {
+                    lineaMago += repertorio.get(i).getNombreHechizo();
+                    // Si no es el último hechizo, agregamos el separador "|"
+                    if (i < repertorio.size() - 1) {
+                        lineaMago += "|";
+                    }
+                }
+                
+                writerMagos.write(lineaMago);
+                writerMagos.newLine();
+            }
+            writerMagos.close();
+            
+        } catch (IOException e) {
+            System.out.println("Ocurrió un error al guardar los archivos: " + e.getMessage());
+        }
     }
 }

@@ -12,8 +12,8 @@ public class Fuego extends Hechizo {
      * @param danio Daño base.
      * @param duracionQuemadura Turnos que dura la quemadura.
      */
-    public Fuego(String nombreHechizo, int danio, int duracionQuemadura) {
-        super(nombreHechizo, danio);
+    public Fuego(String nombreHechizo, String tipo, int danio, int duracionQuemadura) {
+        super(nombreHechizo, tipo, danio);
         this.duracionQuemadura = duracionQuemadura;
     }
 

@@ -5,7 +5,7 @@ package logicaMagos;
  */
 public class Agua extends Hechizo {
     private int cantidadHeal;
-    private double presionAgua;
+    private int presionAgua;
     
     /**
      * Constructor para el hechizo de Agua.
@@ -14,8 +14,8 @@ public class Agua extends Hechizo {
      * @param cantidadHeal Cantidad de curación que otorga.
      * @param presionAgua Presión del agua en el ataque.
      */
-    public Agua(String nombreHechizo, int danio, int cantidadHeal, double presionAgua) {
-        super(nombreHechizo, danio);
+    public Agua(String nombreHechizo, String tipo, int danio, int cantidadHeal, int presionAgua) {
+        super(nombreHechizo, tipo, danio);
         this.cantidadHeal = cantidadHeal;
         this.presionAgua = presionAgua;
     }
@@ -33,5 +33,5 @@ public class Agua extends Hechizo {
     public int getCantidadHeal() { return cantidadHeal; }
     public void setCantidadHeal(int cantidadHeal) { this.cantidadHeal = cantidadHeal; }
     public double getPresionAgua() { return presionAgua; }
-    public void setPresionAgua(double presionAgua) { this.presionAgua = presionAgua; }
+    public void setPresionAgua(int presionAgua) { this.presionAgua = presionAgua; }
 }

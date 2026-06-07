@@ -6,15 +6,16 @@ package logicaMagos;
 public abstract class Hechizo implements Evaluable {
     private String nombreHechizo;
     private int danio;
-    
+    private String tipo;
     /**
      * Constructor de la clase abstracta Hechizo.
      * @param nombreHechizo El nombre identificador del hechizo.
      * @param danio La cantidad de daño base que inflige.
      */
-    public Hechizo(String nombreHechizo, int danio) {
+    public Hechizo(String nombreHechizo, String tipo , int danio) {
         this.nombreHechizo = nombreHechizo;
         this.danio = danio;
+        this.tipo = tipo;
     }
 
     /**
@@ -48,4 +49,13 @@ public abstract class Hechizo implements Evaluable {
     public void setDanio(int danio) {
         this.danio = danio;
     }
+    
+    public String getTipo() {
+    	return tipo;
+    }
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+    
 }
