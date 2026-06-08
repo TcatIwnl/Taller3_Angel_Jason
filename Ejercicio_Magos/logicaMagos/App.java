@@ -44,6 +44,7 @@ public class App {
                         break;
                     case 3:
                         System.out.println("Guardando cambios y cerrando el sistema...");
+                        sistema.guardarDatos();
                         menuPrincipal = false;
                         break;
                     default:
@@ -323,6 +324,13 @@ public class App {
         }
     }
     
+    /**
+     * Despliega un menú interactivo para modificar los atributos de un hechizo existente.
+     * Permite cambiar el nombre, daño base o atributos específicos según su elemento.
+     * Guarda los cambios automáticamente en los archivos de persistencia.
+     * * @param teclado Objeto Scanner para capturar la entrada del usuario.
+     * @param sistema Instancia del sistema que contiene la lógica y los datos.
+     */
     private static void modificarHechizoInteractivo(Scanner teclado, SistemaImpl sistema) {
         System.out.println("\n--- MODIFICAR HECHIZO ---");
         ArrayList<Hechizo> lista = sistema.getListaHechizosGenerales();
@@ -436,6 +444,13 @@ public class App {
         }
     }
     
+    /**
+     * Despliega un menú interactivo para modificar un mago existente.
+     * Permite cambiar su nombre, enseñarle nuevos hechizos del catálogo mundial o hacer que olvide hechizos.
+     * Guarda los cambios automáticamente en los archivos de persistencia.
+     * * @param teclado Objeto Scanner para capturar la entrada del usuario.
+     * @param sistema Instancia del sistema que contiene la lógica y los datos.
+     */
     private static void modificarMagoInteractivo(Scanner teclado, SistemaImpl sistema) {
         System.out.println("\n--- MODIFICAR MAGO ---");
         ArrayList<Mago> magos = sistema.getListaMagosGenerales();
@@ -547,6 +562,12 @@ public class App {
         }
     }
     
+    /**
+     * Lista los magos actuales y permite al usuario eliminar uno del sistema mediante su índice.
+     * Si la operación es exitosa, se actualizan los archivos de texto.
+     * * @param teclado Objeto Scanner para capturar la entrada del usuario.
+     * @param sistema Instancia del sistema que contiene la lógica y los datos.
+     */
     private static void eliminarMagoInteractivo(Scanner teclado, SistemaImpl sistema) {
         System.out.println("\n--- ELIMINAR MAGO ---");
         ArrayList<Mago> magos = sistema.getListaMagosGenerales();
@@ -586,6 +607,13 @@ public class App {
         }
     }
     
+    /**
+     * Elimina un hechizo del catálogo general del mundo mágico.
+     * Adicionalmente, recorre el repertorio de todos los magos y elimina este hechizo
+     * de sus listas personales para mantener la coherencia de datos.
+     * * @param teclado Objeto Scanner para capturar la entrada del usuario.
+     * @param sistema Instancia del sistema que contiene la lógica y los datos.
+     */
     private static void eliminarHechizoInteractivo(Scanner teclado, SistemaImpl sistema) {
         System.out.println("\n--- ELIMINAR HECHIZO ---");
         ArrayList<Hechizo> hechizos = sistema.getListaHechizosGenerales();

@@ -42,4 +42,10 @@ public interface Sistema {
      * @return ArrayList con el Top 3 de Magos.
      */
     ArrayList<Mago> obtenerTop3Magos();
+    
+    /**
+     * Sobrescribe los archivos de texto (Magos.txt y Hechizos.txt) con los datos actuales en memoria.
+     */
+    void guardarDatos();
+    
 }
